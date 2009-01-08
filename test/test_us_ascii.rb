@@ -1,0 +1,20 @@
+require File.join(File.dirname(__FILE__), 'common')
+
+class US_ASCII_Test < Test::Unit::TestCase
+  include DetencHelper
+
+  def test_should_be_us_ascii_if_it_contains_all_bytes_under_0x80
+    sample = (0..0x7F).inject(''){ |s, b|
+      s << [b].pack('C')
+    }
+    assert_equal US_ASCII, detenc(sample)
+  end
+
+  def test_should_be_us_ascii_if_it_contains_any_byte_of_0x80_or_more
+    (0x80..0xFF).each do |invalid_byte|
+      sample = [invalid_byte].pack('C')
+      assert_not_equal US_ASCII, detenc(sample), "%02X is not #{US_ASCII}" % invalid_byte
+    end
+  end
+end
+
