@@ -13,7 +13,11 @@ task :install => :build do |t|
   cp 'bin/detenc', '/usr/local/bin'
 end
 
-file 'bin/detenc' => FileList['src/*.[ch]'] + ['src/usage.h'] do |t|
+file 'bin' do |t|
+  mkdir_p t.name
+end
+
+file 'bin/detenc' => FileList['src/*.[ch]'] + ['src/usage.h'] + ['bin'] do |t|
   sources = t.prerequisites.select{ |n| n =~ /\.c$/ }
   sh "cc -Wall -o #{t.name} #{sources * ' '}"
 end
