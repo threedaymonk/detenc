@@ -17,7 +17,7 @@ file 'bin' do |t|
   mkdir_p t.name
 end
 
-file 'bin/detenc' => FileList['src/*.[ch]'] + ['src/usage.h'] + ['bin'] do |t|
+file 'bin/detenc' => FileList['src/*.[ch]'] + ['bin', 'src/usage.h'] do |t|
   sources = t.prerequisites.select{ |n| n =~ /\.c$/ }
   sh "cc -Wall -o #{t.name} #{sources * ' '}"
 end
