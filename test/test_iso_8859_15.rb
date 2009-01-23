@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), 'common')
 class ISO_8859_15_Test < Test::Unit::TestCase
   include DetencHelper
 
-  INVALID_BYTES = (0x80..0x9F).to_a
+  INVALID_BYTES = (0x7F..0x9F).to_a
 
   def test_should_be_iso_8859_15_if_it_contains_all_valid_bytes
     sample = (0..0xFF).inject(''){ |s, b|
