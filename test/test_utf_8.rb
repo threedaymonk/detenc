@@ -18,6 +18,10 @@ class UTF8StressTest < Test::Unit::TestCase
     assert !disallowed.include?(detected), "Expected #{detected.inspect} not to be one of #{disallowed.inspect}"
   end
 
+  def test_should_reject_DEL
+    assert_invalid "\x7f"
+  end
+
   def test_should_accept_greek_kosme
     assert_valid "\xce\xba\xe1\xbd\xb9\xcf\x83\xce\xbc\xce\xb5"
   end
@@ -47,7 +51,7 @@ class UTF8StressTest < Test::Unit::TestCase
   end
 
   def test_should_accept_last_possible_sequence_for_1_byte_sequence
-    assert_valid "\x7f"
+    assert_valid "\x7e"
   end
 
   def test_should_accept_last_possible_sequence_for_2_byte_sequence

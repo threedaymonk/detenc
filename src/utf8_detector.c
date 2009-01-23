@@ -7,7 +7,7 @@ utf8_null:
   byte = fgetc(fp);
   if (byte == EOF)
     goto utf8_finished;
-  if (byte >> 7 == 0)      // 0xxx xxxx  US-ASCII
+  if (byte < 0x7F)         // US-ASCII
     goto utf8_null;
   if (byte >> 5 == 0x06)   // 110x xxxx  2-byte sequence
     goto utf8_2b_1;
