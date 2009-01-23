@@ -6,20 +6,32 @@ class UTF8StressTest < Test::Unit::TestCase
   # From Markus Kuhn's stress tests
   # http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt
 
-  def assert_valid(data)
+  def assert_valid(data, message='')
     detected = detenc(data)
     allowed = [US_ASCII, UTF_8]
-    assert allowed.include?(detected), "Expected #{detected.inspect} to be one of #{allowed.inspect}"
+    assert allowed.include?(detected), "Expected #{detected.inspect} to be one of #{allowed.inspect} #{message}"
   end
 
-  def assert_invalid(data)
+  def assert_invalid(data, message='')
     detected = detenc(data)
     disallowed = [US_ASCII, UTF_8]
-    assert !disallowed.include?(detected), "Expected #{detected.inspect} not to be one of #{disallowed.inspect}"
+    assert !disallowed.include?(detected), "Expected #{detected.inspect} not to be one of #{disallowed.inspect} #{message}"
   end
 
   def test_should_reject_DEL
     assert_invalid "\x7f"
+  end
+
+  def test_should_reject_unprintable_control_characters_under_0x20
+    [ 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0e, 0x0f,
+      0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19,
+      0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f ].each do |b|
+      assert_invalid [b].pack('C'), "Byte #{b.to_s(16)}"
+    end
+  end
+
+  def test_should_accept_printable_control_characters_under_0x20
+    assert_valid "\x09\x0a\x0b\x0c\x0d"
   end
 
   def test_should_accept_greek_kosme
@@ -27,7 +39,7 @@ class UTF8StressTest < Test::Unit::TestCase
   end
 
   def test_should_accept_first_possible_sequence_for_1_byte_sequence
-    assert_valid "\x00"
+    assert_valid "\x09"
   end
 
   def test_should_accept_first_possible_sequence_for_2_byte_sequence

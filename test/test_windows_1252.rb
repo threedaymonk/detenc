@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), 'common')
 class Windows1252Test < Test::Unit::TestCase
   include DetencHelper
 
-  INVALID_BYTES = [0x7F, 0x81, 0x8D, 0x8F, 0x90, 0x9D]
+  INVALID_BYTES = (0x00..0x08).to_a + (0x0E..0x1F).to_a + [0x7F, 0x81, 0x8D, 0x8F, 0x90, 0x9D]
 
   def test_should_be_windows_1252_if_it_contains_all_valid_bytes
     sample = (0..0xFF).inject(''){ |s, b|
