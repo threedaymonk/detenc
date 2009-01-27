@@ -53,7 +53,7 @@ int main (int argc, char **argv) {
       encoding = detect_encoding(fp);
       printf("%s", encoding);
       if (show_offset && strcmp("UNKNOWN", encoding) == 0)
-        printf(" near offset %d (0x%X)", (int)ftell(fp), (int)ftell(fp));
+        printf(" near offset %ld (0x%lX)", (long)ftell(fp), (long)ftell(fp));
       printf("\n");
       fclose(fp);
     }
