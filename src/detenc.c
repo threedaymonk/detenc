@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include "libdetenc.h"
 #include "usage.h"
@@ -10,12 +11,17 @@ void show_usage (void) {
 int main (int argc, char **argv) {
   FILE *fp;
   int quiet = 0;
+  int show_offset = 0;
   int opt;
   int i;
   char *filename;
+  const char *encoding;
 
-  while ((opt = getopt(argc, argv, "qh")) != -1) {
+  while ((opt = getopt(argc, argv, "oqh")) != -1) {
     switch (opt) {
+      case 'o':
+        show_offset = 1;
+        break;
       case 'q':
         quiet = 1;
         break;
@@ -44,7 +50,11 @@ int main (int argc, char **argv) {
     } else {
       if (!quiet)
         printf("%s: ", filename);
-      printf("%s\n", detect_encoding(fp));
+      encoding = detect_encoding(fp);
+      printf("%s", encoding);
+      if (show_offset && strcmp("UNKNOWN", encoding) == 0)
+        printf(" near offset %d (0x%X)", (int)ftell(fp), (int)ftell(fp));
+      printf("\n");
       fclose(fp);
     }
   }
