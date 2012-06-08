@@ -1,12 +1,13 @@
 Heuristically detect the encoding of a Western European text file.
-Recognised encodings are US-ASCII, UTF-8, ISO-8859-15, WINDOWS-1252, and UNKNOWN.
+
+Recognised encodings are US-ASCII, UTF-8, ISO-8859-15, WINDOWS-1252, and
+UNKNOWN.
 
 Usage: detenc FILENAME (FILENAME ...)
 
 Options:
-  -o
-    If the encoding is UNKNOWN, show the offset of the byte that didn't conform.
-  -q
-    Quiet: just give the encoding for each input file; don't print the filename.
-  -h
-    Show this help text.
+  -o  If the encoding is UNKNOWN, show the offset of the byte that didn't
+      conform.
+  -q  Quiet: just give the encoding for each input file; don't print the
+      filename.
+  -h  Show this help text.
