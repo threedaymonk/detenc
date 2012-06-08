@@ -15,16 +15,12 @@ can determine the encoding of a two-gigabyte file in under a minute.
 
 Build
 
-The program is written in C and uses standard libraries. The test suite is
-written in Ruby. Additionally, the build process requires Rake:
+The program is written in C and uses standard libraries. The test suite
+requires Ruby (1.8 or 1.9) and Rake to be available
 
-  rake         # builds binary
-  rake test    # runs test suite against binary
-  rake install # installs binary to /usr/local/bin
-
-It is also possible to build the binary manually: use something like:
-
-  cc -o bin/detenc src/*.c
+  make         # builds binary
+  make check   # runs test suite
+  make install # installs binary to /usr/local/bin
 
 Use
 
