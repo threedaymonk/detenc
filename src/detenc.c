@@ -2,10 +2,11 @@
 #include <string.h>
 #include <unistd.h>
 #include "libdetenc.h"
-#include "usage.h"
 
 void show_usage (void) {
-  printf(USAGE_TEXT);
+  printf(
+    #include "usage.inc"
+  );
 }
 
 int main (int argc, char **argv) {
