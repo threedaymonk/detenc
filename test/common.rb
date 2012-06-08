@@ -13,7 +13,7 @@ module DetencHelper
     t = Tempfile.new('detenc')
     t << data
     t.close
-    `bin/detenc -q #{t.path}`.strip
+    `#{File.dirname(__FILE__)}/../bin/detenc -q #{t.path}`.strip
   end
 end
 
